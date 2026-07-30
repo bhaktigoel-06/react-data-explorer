@@ -13,9 +13,23 @@ export default function App() {
   const { data, loading, error } = useFetch();
   const [search, setSearch] = useState("");
   const [course, setCourse] = useState("All");
+if (loading) {
+  return (
+    <div className="loading-container">
+      <div className="spinner"></div>
+      <p>Loading characters...</p>
+    </div>
+  );
+}
 
-if (loading) return <h2>Loading...</h2>;
-if (error) return <h2>Error: {error}</h2>;
+if (error) {
+  return (
+    <div className="error-box">
+      <h2>Something went wrong</h2>
+      <p>{error}</p>
+    </div>
+  );
+}
 const courses = [
   "All",
   ...new Set(data.map((s) => s.species))
