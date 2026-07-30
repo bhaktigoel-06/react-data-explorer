@@ -10,9 +10,10 @@ import { useFetch } from "./hooks/useFetch";
 
 
 export default function App() {
-  const { data, loading, error } = useFetch();
+ 
   const [search, setSearch] = useState("");
   const [course, setCourse] = useState("All");
+  const { data, loading, error, retry } = useFetch();
 if (loading) {
   return (
     <div className="loading-container">
@@ -27,6 +28,9 @@ if (error) {
     <div className="error-box">
       <h2>Something went wrong</h2>
       <p>{error}</p>
+       <button onClick={retry}>
+        Retry
+      </button>
     </div>
   );
 }
