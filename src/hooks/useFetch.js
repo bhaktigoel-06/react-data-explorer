@@ -1,24 +1,30 @@
 import { useState, useEffect } from "react";
 import { fetchItems } from "../api/client";
 
-export const useFetch = () => {
+export const useFetch = (search) => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchData = () => {
+  useEffect(() => {
+    const controller = new AbortController();
+
     setLoading(true);
     setError(null);
 
-    fetchItems()
+    fetchItems(search, controller.signal)
       .then((res) => setData(res))
-      .catch((err) => setError(err.message))
+      .catch((err) => {
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
+      })
       .finally(() => setLoading(false));
-  };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+    return () => {
+      controller.abort(); 
+    };
+  }, [search]);
 
-  return { data, loading, error, retry: fetchData };
+  return { data, loading, error };
 };

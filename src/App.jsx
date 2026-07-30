@@ -13,7 +13,7 @@ export default function App() {
  
   const [search, setSearch] = useState("");
   const [course, setCourse] = useState("All");
-  const { data, loading, error, retry } = useFetch();
+  const { data, loading, error, retry } = useFetch(search);
 if (loading) {
   return (
     <div className="loading-container">
@@ -39,11 +39,10 @@ const courses = [
   ...new Set(data.map((s) => s.species))
 ];
   
-  const filteredStudents = data.filter((s) => {
-    const matchName = s.name.toLowerCase().includes(search.toLowerCase());
-    const matchCourse = course === "All" || s.species === course;
-    return matchName && matchCourse;
-  });
+ const filteredStudents =
+  course === "All"
+    ? data
+    : data.filter((s) => s.species === course);
 
   return (
     <>
@@ -66,7 +65,7 @@ const courses = [
 </div>
 
     
-     {
+    {
   filteredStudents.length === 0 ? (
     <div className="empty-state">
       <h2>No students match your search</h2>
