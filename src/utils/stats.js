@@ -1,24 +1,24 @@
-export function getAverageAge(students) {
+export const getStats = (data) => {
+  if (!data || data.length === 0) {
+    return {
+      total: 0,
+      alive: 0,
+      dead: 0,
+      unknown: 0
+    };
+  }
 
-  if(students.length === 0) return 0;
+  const result = data.reduce(
+    (acc, item) => {
+      acc.total++;
 
-  const total = students.reduce(
-    (sum, student) => sum + student.age,
-    0
+      if (item.status === "Alive") acc.alive++;
+      if (item.status === "Dead") acc.dead++;
+      if (item.status === "unknown") acc.unknown++;
+      return acc;
+    },
+    { total: 0, alive: 0, dead: 0, unknown: 0 }
   );
 
-  return (total / students.length).toFixed(2);
-}
-
-
-export function getCourseCount(students) {
-
-  return students.reduce((acc, student)=>{
-
-    acc[student.course] = (acc[student.course] || 0) + 1;
-
-    return acc;
-
-  }, {});
-
-}
+  return result;
+};

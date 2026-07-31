@@ -16,7 +16,7 @@ export default function StudentCard({ student }) {
 
       <p><b>ORIGIN:</b> {student.origin.name}</p>
 
-      <p><b>LOCATION</b>{student.location.name}</p>
+      <p><b>LOCATION:</b>{student.location.name}</p>
 
      
 
