@@ -13,7 +13,10 @@ export const useFetch = (search) => {
     setError(null);
 
     fetchItems(search, controller.signal)
-      .then((res) => setData(res))
+      .then((res) => {
+        console.log("DATA:", res); // 👈 debug
+        setData(res);
+      })
       .catch((err) => {
         if (err.name !== "AbortError") {
           setError(err.message);
@@ -21,9 +24,7 @@ export const useFetch = (search) => {
       })
       .finally(() => setLoading(false));
 
-    return () => {
-      controller.abort(); 
-    };
+    return () => controller.abort();
   }, [search]);
 
   return { data, loading, error };

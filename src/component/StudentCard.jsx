@@ -1,27 +1,34 @@
-
 export default function StudentCard({ student }) {
+  if (!student) return null;
+
   return (
     <div className="student-card">
- <img src={student.image} alt={student.name} className="student-img" />
+      {/* IMAGE */}
+      <img
+        src={student.image}
+        alt={student.title}
+        style={{ width: "100%", borderRadius: "10px" }}
+      />
 
-      <h2 className="student-name">
-         🆔 {student.id} {student.name}
+      {/* TITLE */}
+      <h2>
+        🆔 {student.id} - {student.title}
       </h2>
 
-      <p><b>STATUS:</b> {student.status}</p>
+      {/* BASIC INFO */}
+      <p><b>SPECIES:</b> {student.subtitle || "N/A"}</p>
+      <p><b>STATUS:</b> {student.status || "Unknown"}</p>
+      <p><b>GENDER:</b> {student.gender || "N/A"}</p>
 
-      <p><b>SPECIES:</b> {student.species}</p>
+      {/* EXTRA INFO */}
+      <p><b>ORIGIN:</b> {student.origin || "Unknown"}</p>
+      <p><b>LOCATION:</b> {student.location || "Unknown"}</p>
 
-      <p><b>GENDER:</b> {student.gender}</p>
-
-      <p><b>ORIGIN:</b> {student.origin.name}</p>
-
-      <p><b>LOCATION:</b>{student.location.name}</p>
-
-     
-
-      <p><b>CREATED:</b>{student.created}</p>
-
+      {/* DATE FORMAT */}
+      <p>
+        <b>CREATED:</b>{" "}
+        {student.created ? student.created.slice(0, 10) : "N/A"}
+      </p>
     </div>
   );
 }

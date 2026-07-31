@@ -1,6 +1,9 @@
+import {useTheme} from "../context/ThemeContext";
 export default function StatsDashboard({ stats }) {
+  const { dark } = useTheme();
+
   return (
-    <div>
+    <div className={`stats-dashboard ${dark ? "dark" : "light"}`}>
       <h3>Stats</h3>
       <p>Total: {stats.total}</p>
       <p>Alive: {stats.alive}</p>

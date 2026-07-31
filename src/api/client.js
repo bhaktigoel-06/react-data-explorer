@@ -1,18 +1,28 @@
+const BASE_URL = "https://rickandmortyapi.com/api/character";
+
+const normalise = (item) => ({
+  id: item.id,
+  title: item.name,
+  subtitle: item.species,
+  image: item.image,
+  status: item.status,
+  gender: item.gender,
+
+  // ✅ IMPORTANT (flat structure)
+  origin: item.origin?.name || "Unknown",
+  location: item.location?.name || "Unknown",
+
+  created: item.created,
+});
+
 export const fetchItems = async (search, signal) => {
-  const url = search
-    ? `https://rickandmortyapi.com/api/character/?name=${search}`
-    : `https://rickandmortyapi.com/api/character`;
-
-  const res = await fetch(url, { signal });
-
-  if (res.status === 404) {
-    return []; // blank screen fix
-  }
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch");
-  }
+  const res = await fetch(`${BASE_URL}?name=${search}`, { signal });
 
   const data = await res.json();
-  return data.results;
+
+  if (!res.ok || !data.results) {
+    return [];
+  }
+
+  return data.results.map(normalise);
 };
