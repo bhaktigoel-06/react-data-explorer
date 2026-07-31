@@ -1,20 +1,19 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [dark, setDark] = useState(false);
 
-  const toggleTheme = () => setDark((prev) => !prev);
-
-  // ✅ BODY PE CLASS APPLY
-  useEffect(() => {
-    document.body.className = dark ? "dark" : "light";
-  }, [dark]);
+  const toggleTheme = () => {
+    setDark(prev => !prev);
+  };
 
   return (
     <ThemeContext.Provider value={{ dark, toggleTheme }}>
-      {children}
+      <div className={dark ? "dark" : "light"}>
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 };
