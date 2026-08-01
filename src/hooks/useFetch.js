@@ -14,7 +14,7 @@ export const useFetch = (search) => {
 
     fetchItems(search, controller.signal)
       .then((res) => {
-        console.log("DATA:", res); // 👈 debug
+        console.log("DATA:", res); 
         setData(res);
       })
       .catch((err) => {
@@ -27,5 +27,6 @@ export const useFetch = (search) => {
     return () => controller.abort();
   }, [search]);
 
+  
   return { data, loading, error };
 };

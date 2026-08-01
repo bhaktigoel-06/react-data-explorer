@@ -53,8 +53,9 @@ body {
 
 /* hover effect */
 .student-card:hover {
+   box-shadow: 0 0 10px yellow, 0 0 20px yellow;
   transform: translateY(-8px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+ 
 }
 
 
